@@ -20,23 +20,24 @@ include <blowpipe.scad>;
 
 
 ```
-demo(); 
+demo(150); 
 ```
 
 > Generate the blow module
 
 ```
-blowModule(); 
+blowModule(150); 
 ```
 
 > Generate pipes
 
 ```
-blowPipe();
+blowPipe(150);
 ```
 
-## Prameters
-You only have to specify the `printer_max_height` that correspond to your printer and then selected the `number_of_pipe`and then render the part in OpenScad. 
+## parameter
+
+150 is for the length of the pipe the max value depend of the capacity of your printer min is 50;
 
 ## Printing
 Those part should be printed as they came out of the script without any support and a small infill around 10% is ok.
