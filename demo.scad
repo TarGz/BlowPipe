@@ -5,4 +5,4 @@ include <blowpipe.scad>;
 // Create a blow module
 // blowModule(70);
 // Create blow pipes
-blowPipe(100);
+blowPipe(200);

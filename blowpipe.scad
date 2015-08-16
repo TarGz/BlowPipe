@@ -75,9 +75,9 @@ module pipeConnector(pl){
             translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
          }
          // FIX CONNECTOR
-         #translate([0, 0, 0]) difference(){
+         translate([0, 0, 0]) difference(){
             cylinder(pl*fix_connector_length_ratio,r1=external_radius+fix_width+fix_ease,r2=external_radius);
-            translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio),r=external_radius);
+            translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio+10),r=external_radius);
          }     
      }
 }
