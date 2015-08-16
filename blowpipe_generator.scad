@@ -1,6 +1,6 @@
 
 // ----------------------------------------------------------------------------
-// Parametric BlowPipe for Nerf arrows by @targz Julien Terraz
+// Parametric BlowPipe for Nerf dart by @targz Julien Terraz
 // It is licensed under the Creative Commons 1.0 Universal
 // ----------------------------------------------------------------------------
 
@@ -13,9 +13,10 @@ fix_connector_length=printer_max_height/2;
 
 
 // PIPE
-internal_radius     = 7; // do not change fine for standart Nerf arrow
-entrance_radius   = 6.5; // manage the pressure on the arrow in the entrance
-external_radius     = 9; 
+internal_radius     = 7; // do not change fine for standart Nerf arrow // .5 inch ?
+entrance_radius     = 6; // manage the pressure on the arrow in the entrance
+entrance_length     = 4;
+external_radius     = 9.5; 
 
 
 
@@ -27,13 +28,13 @@ groove_number = 5; // Number of groove default:4;
 
 // PRIVATE DO NOT EDIT FROM HHERE
 groove_angle = 360/groove_number;
-fix_ease=1; //
+fix_ease=.5; //
 fix_width = external_radius-internal_radius;
 
 fix_pipe_overlap=1;
 
 length = printer_max_height-fix_length; // total length of the BlowPipe
-blow_radius = external_radius+5;
+blow_radius = external_radius+2;
 
 // GROOVE
 module groove(){
@@ -85,23 +86,42 @@ module blow(){
 
          translate([0, 0, fix_length]) {
             union(){
-                // FIX PIPE
-                
+                // LIPS COONTACT PIPE
                 translate([0, 0, -fix_length]) difference(){
                     cylinder(fix_length,r=blow_radius);
                     translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
                  }
-                 // FIX CONNECTOR
-                 translate([0, 0, 0]) difference(){
+                 // PRESURE MANAGER
+                 union(){
+                     // cone down
+                     color("grey") translate([0, 0, 0]) difference(){
+                        cylinder(entrance_length,r1=blow_radius,r2=external_radius);
+                        translate([0, 0, -.1]) cylinder(entrance_length+.2,r1=entrance_radius,r2=external_radius);
+                     }         
+                     // ring
+                     color("purple") translate([0, 0, -entrance_length]) difference(){
+                        cylinder(entrance_length,r=blow_radius);
+                        translate([0, 0, -1]) cylinder(entrance_length+2,r=entrance_radius);
+                     }   
+                     // cone up
+                     color("white") translate([0, 0, -fix_length]) difference(){
+                        cylinder(fix_length-entrance_length,r1=blow_radius,r2=blow_radius);
+                        translate([0, 0, -.1]) cylinder(fix_length-entrance_length+.2,r1=external_radius,r2=entrance_radius);
+                     }   
+                }
+                 
+                 
+                 // CONE
+                 color("green")  translate([0, 0, 0]) difference(){
                     cylinder(fix_connector_length,r1=blow_radius,r2=external_radius);
                     translate([0, 0, -5]) cylinder((fix_connector_length)+10,r=external_radius);
                  }     
             }  
         }
-         // CONE   
+         // LIPS CURVE   
          union(){
             //cylinder(10,r1=external_radius+10,r2=1);  
-            scale([2.25,1,1])rotate([90,90,0])  translate([0,0,-50]) cylinder(100,r=external_radius); 
+            scale([2.25,1,1])rotate([90,90,0])  translate([8,0,-50]) cylinder(100,r=external_radius); 
          }
     }  
 }
