@@ -6,35 +6,32 @@
 
 
 // LENGTH
-number_of_pipe=4;
-printer_max_height = 150;
-fix_length=30;
-fix_connector_length=printer_max_height/2;
+printer_max_height  =   150;    // Max heigth per pipe = max heigth of your printer
+fix_length          =   30;    // Length of th connectors
+fix_ease            =   .5;    // ease between pipe to connect them
+
+// CONNECTOR LENGTH
+fix_connector_length=   printer_max_height/2;
 
 
 // PIPE
-internal_radius     = 7; // do not change fine for standart Nerf arrow // .5 inch ?
-entrance_radius     = 6; // manage the pressure on the arrow in the entrance
-entrance_length     = 4;
-external_radius     = 9.5; 
-
-
+internal_radius     =   7;    // do not change fine for standart Nerf arrow // .5 inch ?
+entrance_radius     =   7;    // entrance used to manage the pressure on the arrow in the entrance
+entrance_length     =   4;    // entrance length
+external_radius     =   9.5;  // radius of the pipe 
 
 // GROOVE
-groove_twist = 180; // number of rotation per module default:90;
-groove_size = 2;  // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number = 5; // Number of groove default:4;
+groove_twist        =   90;  // number of rotation per module default:90;
+groove_size         =   2;    // Size of the groove (must not be bigger than External radius - Internal radius default:2
+groove_number       =   4;    // Number of groove default:4;
 
 
 // PRIVATE DO NOT EDIT FROM HHERE
-groove_angle = 360/groove_number;
-fix_ease=.5; //
-fix_width = external_radius-internal_radius;
-
-fix_pipe_overlap=1;
-
-length = printer_max_height-fix_length; // total length of the BlowPipe
-blow_radius = external_radius+2;
+groove_angle        =   360 / groove_number;
+fix_width           =   external_radius-internal_radius;
+fix_pipe_overlap    =   1;
+length              =   printer_max_height-fix_length; // total length of the BlowPipe
+blow_radius         =   external_radius+2;
 
 // GROOVE
 module groove(){
@@ -64,7 +61,7 @@ module main_pipe(){
 
 
 
-
+// Pipes connector
 module pipeConnector(){
     
      translate([0, 0, fix_length]) {
@@ -81,6 +78,7 @@ module pipeConnector(){
      }
 }
 
+// Blow module
 module blow(){
     difference(){
 
@@ -119,35 +117,44 @@ module blow(){
             }  
         }
          // LIPS CURVE   
-         union(){
-            //cylinder(10,r1=external_radius+10,r2=1);  
-            scale([2.25,1,1])rotate([90,90,0])  translate([8,0,-50]) cylinder(100,r=external_radius); 
-         }
+//         *union(){
+//            //cylinder(10,r1=external_radius+10,r2=1);  
+//            scale([2.25,1,1])rotate([90,90,0])  translate([8,0,-50]) cylinder(100,r=external_radius); 
+//         }
     }  
 }
 
-module blowPipe(){
-    blow();
-    main_pipe();
+module blowModule(){
+    rotate([180,0,0]) translate([0,0,-printer_max_height]) union(){
+        blow();
+        main_pipe();
+    }
 }
 
-module pipe(){
-     union(){
+module blowPipe(){
+     rotate([180,0,0]) translate([0,0,-printer_max_height]) union(){
         pipeConnector();
         main_pipe();
     }
 }
 
-module pipes(){
-    
+// DEMO
+number_of_pipe      =   4;     // Number of pipe
+module demo(){
     for ( i = [0 : number_of_pipe-1] ){
         if(i==0){
-            blowPipe();
+            blowModule();
         }else{
-            translate([(i*external_radius)*5,0,0]) pipe();
+            translate([(i*external_radius)*5,0,0]) blowPipe();
         }
     }
 }
 
-// MAIN
-rotate([180,0,0]) translate([0,0,-printer_max_height]) pipes();
+
+// DEMO
+//demo();
+// Create a blow module
+// blowModule();
+// Create blow pipes
+// blowPipe();
+
