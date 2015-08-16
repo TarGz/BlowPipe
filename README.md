@@ -12,3 +12,5 @@ You only have to specify the `printer_max_height` that correspond to your printe
 
 
 > Those part should be printed as they came out of the script without any support and a small infill around 10% is ok.
+
+-
