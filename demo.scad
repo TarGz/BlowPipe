@@ -1,8 +1,8 @@
 include <blowpipe.scad>;
 
 // DEMO
-demo();
+demo(150);
 // Create a blow module
-// blowModule();
+// blowModule(150);
 // Create blow pipes
-// blowPipe();
+// blowPipe(150);
