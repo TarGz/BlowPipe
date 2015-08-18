@@ -14,7 +14,7 @@ fix_connector_length=   .5;      // Length ratio // deprecated
 fix_connector_length_ratio = .2; // Regarding the pipe length
 
 // PIPE
-internal_radius     =   7;    // do not change fine for standart Nerf arrow // .5 inch ?
+internal_radius     =   6.7;  // do not change fine for standart Nerf arrow // .5 inch ?
 entrance_radius     =   7;    // entrance used to manage the pressure on the arrow in the entrance
 entrance_length     =   4;    // entrance length
 external_radius     =   9.5;  // radius of the pipe 
@@ -27,7 +27,7 @@ groove_number       =   8;    // Number of groove default:4;
 
 // PRIVATE DO NOT EDIT FROM HHERE
 groove_angle        =   360 / groove_number;
-fix_width           =   external_radius-internal_radius;
+fix_width           =   2;
 fix_pipe_overlap    =   1;
 blow_radius         =   external_radius+2;
 
@@ -46,11 +46,9 @@ module grooves(pl){
     } 
 }
 
-module main_pipe(pl){
+module main_pipe(pl,asGroove){
         // MAIN PIPE
-        echo ("main_pipe",pl);
         length =   pl-fix_length; 
-    
         echo ("main_pipe length",length);
         translate([0, 0, fix_length])  
             difference(){
@@ -58,7 +56,8 @@ module main_pipe(pl){
                     cylinder(length,r=external_radius);
                     translate([0, 0, -5]) cylinder(length+10,r=internal_radius);
                 }
-                grooves(pl);
+                echo("asGroove",asGroove);
+                if(asGroove) grooves(pl);
             }  
 }
 
@@ -67,14 +66,15 @@ module main_pipe(pl){
 // Pipes connector
 module pipeConnector(pl){
      translate([0, 0, fix_length]) {
+        radius1 = external_radius+fix_width+fix_ease;
         // FIX PIPE
         color("grey")  translate([0, 0, -fix_length]) difference(){
-            cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=external_radius+fix_width+fix_ease);
+            cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=radius1);
             translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
          }
-         // FIX CONNECTOR
-         color("orange")  translate([0, 0, 0]) difference(){
-            cylinder(pl*fix_connector_length_ratio,r1=external_radius+fix_width+fix_ease,r2=external_radius);
+        // FIX CONNECTOR
+        color("orange")  translate([0, 0, 0]) difference(){
+            cylinder(pl*fix_connector_length_ratio,r1=radius1,r2=external_radius);
             translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio+10),r=external_radius);
          }     
      }
@@ -126,28 +126,28 @@ module blow(pl){
     }  
 }
 
-module blowModule(pl){
+module blowModule(pl,asGroove){
     rotate([180,0,0]) translate([0,0,-pl]) union(){
         blow(pl);
-        main_pipe(pl);
+        main_pipe(pl,asGroove);
     }
 }
 
-module blowPipe(pl){
+module blowPipe(pl,asGroove){
      rotate([180,0,0]) translate([0,0,-pl]) union(){
         pipeConnector(pl);
-        main_pipe(pl);
+        main_pipe(pl,asGroove);
     }
 }
 
 // DEMO
 
-module demo(){
-    translate([0,0,0]) blowModule(60);
-    translate([50,0,0]) blowPipe(90);
-    translate([100,0,0]) blowPipe(130);
-    translate([150,0,0]) blowPipe(160);
-    translate([200,0,0]) blowPipe(190);
+module demo(asGroove){
+    translate([0,0,0]) blowModule(60,asGroove);
+    translate([50,0,0]) blowPipe(90,asGroove);
+    translate([100,0,0]) blowPipe(130,asGroove);
+    translate([150,0,0]) blowPipe(160,asGroove);
+    translate([200,0,0]) blowPipe(190,asGroove);
 }
 
 
