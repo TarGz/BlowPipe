@@ -4,14 +4,13 @@
 // It is licensed under the Creative Commons 1.0 Universal
 // ----------------------------------------------------------------------------
 
-
+$fn = 50;
 // LENGTH
-printer_max_height  =   150;    // Max heigth per pipe = max heigth of your printer
 fix_length          =   30;    // Length of th connectors
-fix_ease            =   .5;    // ease between pipe to connect them
+fix_ease            =   .2;    // ease between pipe to connect them
 
 // CONNECTOR LENGTH
-fix_connector_length=   .5; // Length ratio // deprecated
+fix_connector_length=   .5;      // Length ratio // deprecated
 fix_connector_length_ratio = .2; // Regarding the pipe length
 
 // PIPE
@@ -21,16 +20,15 @@ entrance_length     =   4;    // entrance length
 external_radius     =   9.5;  // radius of the pipe 
 
 // GROOVE
-groove_twist        =   90;  // number of rotation per module default:90;
-groove_size         =   2;    // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   4;    // Number of groove default:4;
+groove_twist        =   45;  // number of rotation per module default:90;
+groove_size         =   1;    // Size of the groove (must not be bigger than External radius - Internal radius default:2
+groove_number       =   8;    // Number of groove default:4;
 
 
 // PRIVATE DO NOT EDIT FROM HHERE
 groove_angle        =   360 / groove_number;
 fix_width           =   external_radius-internal_radius;
 fix_pipe_overlap    =   1;
-
 blow_radius         =   external_radius+2;
 
 // GROOVE
@@ -43,7 +41,7 @@ module groove(pl){
 
 
 module grooves(pl){
-    union() for ( i = [0 : groove_number] ){
+    color("white") union() for ( i = [0 : groove_number] ){
         rotate([0,0,groove_angle*i]) groove(pl);
     } 
 }
@@ -56,7 +54,7 @@ module main_pipe(pl){
         echo ("main_pipe length",length);
         translate([0, 0, fix_length])  
             difference(){
-                difference(){
+                color("red") difference(){
                     cylinder(length,r=external_radius);
                     translate([0, 0, -5]) cylinder(length+10,r=internal_radius);
                 }
@@ -70,14 +68,14 @@ module main_pipe(pl){
 module pipeConnector(pl){
      translate([0, 0, fix_length]) {
         // FIX PIPE
-        translate([0, 0, -fix_length]) difference(){
+        color("grey")  translate([0, 0, -fix_length]) difference(){
             cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=external_radius+fix_width+fix_ease);
             translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
          }
          // FIX CONNECTOR
-         #translate([0, 0, 0]) difference(){
+         color("orange")  translate([0, 0, 0]) difference(){
             cylinder(pl*fix_connector_length_ratio,r1=external_radius+fix_width+fix_ease,r2=external_radius);
-            translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio),r=external_radius);
+            translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio+10),r=external_radius);
          }     
      }
 }
@@ -101,7 +99,7 @@ module blow(pl){
                         translate([0, 0, -.1]) cylinder(entrance_length+.2,r1=entrance_radius,r2=external_radius);
                      }         
                      // ring
-                     color("purple") translate([0, 0, -entrance_length]) difference(){
+                     color("black") translate([0, 0, -entrance_length]) difference(){
                         cylinder(entrance_length,r=blow_radius);
                         translate([0, 0, -1]) cylinder(entrance_length+2,r=entrance_radius);
                      }   
@@ -114,7 +112,7 @@ module blow(pl){
                  
                  
                  // CONE
-                 color("green")  translate([0, 0, 0]) difference(){
+                 color("orange")  translate([0, 0, 0]) difference(){
                     cylinder(pl*fix_connector_length_ratio,r1=blow_radius,r2=external_radius);
                     translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio)+10,r=external_radius);
                  }     
@@ -143,15 +141,13 @@ module blowPipe(pl){
 }
 
 // DEMO
-number_of_pipe      =   4;     // Number of pipe
-module demo(pl){
-    for ( i = [0 : number_of_pipe-1] ){
-        if(i==0){
-            blowModule(pl);
-        }else{
-            translate([(i*external_radius)*5,0,0]) blowPipe(pl);
-        }
-    }
+
+module demo(){
+    translate([0,0,0]) blowModule(60);
+    translate([50,0,0]) blowPipe(90);
+    translate([100,0,0]) blowPipe(130);
+    translate([150,0,0]) blowPipe(160);
+    translate([200,0,0]) blowPipe(190);
 }
 
 

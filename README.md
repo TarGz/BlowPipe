@@ -1,14 +1,22 @@
-# Parametric BlowPipe 
-> Works fine with Nerf dart
+# A Parametric BlowPipe 
+> That works fine with Nerf dart
 
+![image](img/preview3.jpg)
+![image](img/preview.jpg)
+![image](img/preview2.jpg)
 
+## REQUIREMENTS
+
+You will need [OpenScad](http://www.openscad.org/) free software to generate the blowpipes
 
 ## USAGE
 
-BlowPipe should be 1 meter long idealy, for the ease of printing the pipe is splitted in part.
-Part should be printed vertically and each part should be as long as possible. 
-That's why the main parameter of the script is the maximum print height of your printer.
+- BlowPipe should be 1 meter long idealy, for the ease of printing the pipe is splitted in part.
+- Part should be printed vertically and each part should be as long as possible (depending of your printer)
 
+![image](img/usage.jpg)
+
+## OpenScad API
 
 > Include the lib
 
@@ -20,30 +28,27 @@ include <blowpipe.scad>;
 
 
 ```
-demo(150); 
+demo(length); 
 ```
 
 > Generate the blow module
 
 ```
-blowModule(150); 
+blowModule(length); 
 ```
 
 > Generate pipes
 
 ```
-blowPipe(150);
+blowPipe(length);
 ```
 
-## parameter
+## LENGTH
 
-150 is for the length of the pipe the max value depend of the capacity of your printer min is 50;
+The length of the pipe, the maximum value depend of the capacity of your printer. The minimum is 50;
 
-<<<<<<< HEAD
-> Those part should be printed as they came out of the script without any support and a small infill around 10% is ok.
 
--
-=======
-## Printing
+## PRINTING
+
 Those part should be printed as they came out of the script without any support and a small infill around 10% is ok.
->>>>>>> master
+
