@@ -1,9 +1,9 @@
 # A Parametric BlowPipe 
 > That works fine with Nerf dart
 
-![image](img/preview3.jpg)
+![image](img/preview3.jpg?)
 ![image](img/preview.jpg)
-![image](img/preview2.jpg)
+![image](img/preview2.jpg?)
 
 ## REQUIREMENTS
 
@@ -18,7 +18,7 @@ You will need [OpenScad](http://www.openscad.org/) free software to generate the
 
 ## OpenScad API
 
-> Include the lib
+> First you need to include the lib
 
 ```
 include <blowpipe.scad>;
@@ -28,18 +28,29 @@ include <blowpipe.scad>;
 
 
 ```
-demo(length); 
+/**
+ * @param {boolean} HasGroove
+ */
+demo(true); 
 ```
 
 > Generate the blow module
 
 ```
-blowModule(length); 
+/**
+ * @param {number} PipeLength
+ * @param {boolean} HasGroove
+ */
+blowModule(length,groove); 
 ```
 
 > Generate pipes
 
 ```
+/**
+ * @param {number} PipeLength
+ * @param {boolean} HasGroove
+ */
 blowPipe(length);
 ```
 

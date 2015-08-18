@@ -1,12 +1,16 @@
 include <blowpipe.scad>;
 
 
-$fn = 150;
+$fn = 50;
 
 // DEMO
+
 demo(true);
+
+
+
 // Create a blow module
 // blowModule(70,true);
 // Create blow pipes
-// blowPipe(200,true);
+// blowPipe(150,true);
 

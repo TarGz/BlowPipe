@@ -125,14 +125,20 @@ module blow(pl){
 //         }
     }  
 }
-
+/**
+ * @param {number} PipeLength
+ * @param {boolean} HasGroove
+ */
 module blowModule(pl,asGroove){
     rotate([180,0,0]) translate([0,0,-pl]) union(){
         blow(pl);
         main_pipe(pl,asGroove);
     }
 }
-
+/**
+ * @param {number} PipeLength
+ * @param {boolean} HasGroove
+ */
 module blowPipe(pl,asGroove){
      rotate([180,0,0]) translate([0,0,-pl]) union(){
         pipeConnector(pl);
@@ -141,13 +147,15 @@ module blowPipe(pl,asGroove){
 }
 
 // DEMO
-
+/**
+ * @param {boolean} hasGroove
+ */
 module demo(asGroove){
-    translate([0,0,0]) blowModule(60,asGroove);
-    translate([50,0,0]) blowPipe(90,asGroove);
-    translate([100,0,0]) blowPipe(130,asGroove);
-    translate([150,0,0]) blowPipe(160,asGroove);
-    translate([200,0,0]) blowPipe(190,asGroove);
+    translate([0,0,0])      blowModule(60,asGroove);
+    translate([50,0,0])     blowPipe(90,asGroove);
+    translate([100,0,0])    blowPipe(130,asGroove);
+    translate([150,0,0])    blowPipe(160,asGroove);
+    translate([200,0,0])    blowPipe(190,asGroove);
 }
 
 
