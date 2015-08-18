@@ -4,11 +4,10 @@
 // It is licensed under the Creative Commons 1.0 Universal
 // ----------------------------------------------------------------------------
 
-
+$fn = 50;
 // LENGTH
-printer_max_height  =   150;    // Max heigth per pipe = max heigth of your printer
 fix_length          =   30;    // Length of th connectors
-fix_ease            =   .5;    // ease between pipe to connect them
+fix_ease            =   .2;    // ease between pipe to connect them
 
 // CONNECTOR LENGTH
 fix_connector_length=   .5;      // Length ratio // deprecated
@@ -22,8 +21,8 @@ external_radius     =   9.5;  // radius of the pipe
 
 // GROOVE
 groove_twist        =   45;  // number of rotation per module default:90;
-groove_size         =   2;    // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   4;    // Number of groove default:4;
+groove_size         =   1;    // Size of the groove (must not be bigger than External radius - Internal radius default:2
+groove_number       =   8;    // Number of groove default:4;
 
 
 // PRIVATE DO NOT EDIT FROM HHERE
