@@ -1,9 +1,9 @@
 # A Parametric BlowPipe 
 > That works fine with Nerf dart
 
-![image](preview3.jpg)
-![image](preview.jpg?)
-![image](preview2.jpg?)
+![image](img/preview3.jpg)
+![image](img/preview.jpg)
+![image](img/preview2.jpg)
 
 ## REQUIREMENTS
 
@@ -14,7 +14,7 @@ You will need [OpenScad](http://www.openscad.org/) free software to generate the
 - BlowPipe should be 1 meter long idealy, for the ease of printing the pipe is splitted in part.
 - Part should be printed vertically and each part should be as long as possible (depending of your printer)
 
-![image](usage.jpg?)
+![image](img/usage.jpg)
 
 ## OpenScad API
 
