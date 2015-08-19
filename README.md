@@ -1,5 +1,6 @@
-# A Parametric BlowPipe 
-> That works fine with Nerf dart
+# Nerf Dart Parametric BlowPipe 
+> Inspire by [Franck Youdine](https://twitter.com/fyoudine) Nerf dart Paper blowpipe 
+
 
 
 ![image](img/preview.jpg)
