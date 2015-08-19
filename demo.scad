@@ -5,12 +5,13 @@ $fn = 50;
 
 // DEMO
 
-demo(true);
+// demo(true);
+
 
 
 
 // Create a blow module
-// blowModule(70,true);
+blowModule(70,true);
 // Create blow pipes
-// blowPipe(150,true);
+//blowPipe(150,true);
 
