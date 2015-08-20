@@ -14,27 +14,22 @@
 /* ---------------------------------------------------------------------------- */
 
 
-$fn                 =   50;          // Mesh quality (number of fragments )    
+$fn                 =   50;          // Mesh quality (number of fragments )
 fix_length          =   30;          // Length of th connectors
-fix_length_blow     =   5;      
-fix_ease            =   .2;          // ease between pipe to connect them
-
-/** CONNECTOR LENGTH **/
-fix_connector_length=   .5;         // Length ratio // deprecated
-fix_connector_length_ratio = .2;    // Regarding the pipe length
+fix_ease            =   .15;         // ease between pipe to connect them
 
 /** PIPE **/
 internal_radius     =   6.7;        // do not change fine for standart Nerf arrow // .5 inch ?
 external_radius     =   9.5;        // radius of the pipe 
 
 /** ENTRANCE  **/
-entrance_radius     =   6.5;        // entrance used to manage the pressure on the arrow in the entrance
-entrance_length     =   20;         // entrance length
+entrance_radius     =   6.5;        // Manage the pressure on the arrow in the entrance, more pressure = more speed = harder to blow.
+entrance_length     =   20;         // entrance length sould also have an impact on speed.
 
 // GROOVE
 groove_twist        =   45;         // number of rotation per module default:90;
 groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   16;          // Number of groove default:4;
+groove_number       =   16;         // Number of groove default:4;
 
 
 
@@ -48,7 +43,7 @@ groove_number       =   16;          // Number of groove default:4;
  * @param {boolean} HasGroove
  */
 module blowModule(pl,asGroove){
-    rotate([180,0,0]) translate([0,0,-pl]) union(){
+    color("red") rotate([180,0,0]) translate([0,0,-pl]) union(){
         blow(pl);
         main_pipe(pl,asGroove);
     }
@@ -60,7 +55,7 @@ module blowModule(pl,asGroove){
  * @param {boolean} HasGroove
  */
 module blowPipe(pl,asGroove){
-     rotate([180,0,0]) translate([0,0,-pl]) union(){
+     color("white") rotate([180,0,0]) translate([0,0,-pl]) union(){
         pipeConnector(pl);
         main_pipe(pl,asGroove);
     }
@@ -84,10 +79,13 @@ module demo(asGroove){
 /* ---------------------------------------------------------------------------- */
 
 
-groove_angle        =   360 / groove_number;
-fix_width           =   2;
-fix_pipe_overlap    =   1;
-blow_radius         =   external_radius+2;
+groove_angle                =   360 / groove_number;
+fix_width                   =   2;
+fix_pipe_overlap            =   1;
+blow_radius                 =   external_radius+2;
+fix_length_blow             =   5;                      // length of the blow module connector
+fix_connector_length        =   .5;         // Length ratio // deprecated
+fix_connector_length_ratio  =   .2;    // Regarding the pipe length
 
 
 /* ---------------------------------------------------------------------------- */

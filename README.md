@@ -2,9 +2,11 @@
 > Inspire by [Franck Youdine](https://twitter.com/fyoudine) Nerf dart paper blowpipe 
 
 
+![image](img/usage.jpg)
 
+## DISCLAIMER
 
-
+You are using this at your own risks, nerf dart are relatively safe but can still hurts eyes. I can not been made responsible of any stupid things you will do with this. 
 
 ## ABOUT
 
@@ -13,24 +15,28 @@ We have used them a lot in the office and then Franck Youdine made a paper blowp
 
 The longer the pipe the more it will be accurate, it was a bit challenging to print a long pipe has pipe need to be printed vertically. That were I came with the idea of module that could be connected and printed separately.
 
-![image](img/preview.jpg)
 
-Depending of you printer maximum print height use the script to generate module of the perfect height. The blow module is make the pipe confortable and efficient.
 
-To stabilise the dart during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have a option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the dart rotate during the flight.
+Depending of you printer maximum print height use the script to generate module of the perfect height. The blow module make the pipe confortable and efficient.
+
+To stabilise the dart during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have an option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the dart rotate during the flight.
 
 ![image](img/groove.jpg)
+
 
 ## REQUIREMENTS
 
 You will need [OpenScad](http://www.openscad.org/) free software to generate the blowpipes.
 
-## USAGE
+## How to
 
-![image](img/usage.jpg)
+After installing [OpenScad](http://www.openscad.org/) just use it to open the ```demo.scad``` file.
+The screen should preview the pipe below. 
+
+![image](img/preview.jpg)
 
 
-## OpenScad API
+Then use the code below or uncomment different part of the demo file to generate your pipes.
 
 
 > First you need to include the lib
@@ -72,36 +78,30 @@ blowPipe(length);
 ## ADVANCED PARAMETERS
 
 ```
-// SETTINGS
-$fn                 =   50;          // Mesh quality (number of fragments )    
-fix_length          =   30;          // Length of the connectors
-fix_length_blow     =   5;      
+
+$fn                 =   50;          // Mesh quality (number of fragments )
+fix_length          =   30;          // Length of th connectors
 fix_ease            =   .2;          // ease between pipe to connect them
 
-// CONNECTOR LENGTH
-fix_connector_length=   .5;         // Length ratio // deprecated
-fix_connector_length_ratio = .2;    // Regarding the pipe length
-
-// PIPE
+/** PIPE **/
 internal_radius     =   6.7;        // do not change fine for standart Nerf arrow // .5 inch ?
 external_radius     =   9.5;        // radius of the pipe 
 
-// ENTRANCE 
-/**
-Used to compress the dart inside the pipe to maximyse the pressure
-**/
-entrance_radius     =   6.5;        // entrance used to manage the pressure on the arrow in the entrance
-entrance_length     =   20;         // entrance length
+/** ENTRANCE  **/
+entrance_radius     =   6.5;        // Manage the pressure on the arrow in the entrance, more pressure = more speed = harder to blow.
+entrance_length     =   20;         // entrance length sould also have an impact on speed.
 
 // GROOVE
 groove_twist        =   45;         // number of rotation per module default:90;
 groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   8;          // Number of groove default:4;
+groove_number       =   16;         // Number of groove default:4;
+
+
 ```
 
 
 
-## PRINTING
+## 3D PRINTING
 
 Those part should be printed as they came out of the script without any support.
 infill			: 10%
