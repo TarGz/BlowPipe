@@ -14,18 +14,18 @@
                                                                                                                                                                                            
 
 ```
-> Nerf Dart Parametric BlowPipe Inspire by [Franck Youdine](https://twitter.com/fyoudine) Nerf dart paper blowpipe 
+> Nerf darts Parametric BlowPipe Inspire by [Franck Youdine](https://twitter.com/fyoudine) Nerf darts paper blowpipe 
 
 ![image](img/usage.jpg)
 
 ## DISCLAIMER
 
-You are using this at your own risks, nerf dart are relatively safe but can still hurts eyes. I can not been made responsible of any stupid things you will do with this. 
+You are using this at your own risks, nerf darts are relatively safe but can still hurts eyes. I can not been made responsible of any stupid things you will do with this. 
 
 ## ABOUT
 
-Nerf dart are fun, specially in office opens pace, but Nerf gun are not very powerful and not accurate at all.
-We have used them a lot in the office and then Franck Youdine made a paper blowpipe to send dart. It was so accurate and so powerful that I decided to build one using my 3D printer.
+Nerf darts are fun, specially in office opens pace, but Nerf gun are not very powerful and not accurate at all.
+We have used them a lot in the office and then Franck Youdine made a paper blowpipe to send darts. It was so accurate and so powerful that I decided to build one using my 3D printer.
 
 The longer the pipe the more it will be accurate, it was a bit challenging to print a long pipe has pipe need to be printed vertically. That were I came with the idea of module that could be connected and printed separately.
 
@@ -33,7 +33,7 @@ The longer the pipe the more it will be accurate, it was a bit challenging to pr
 
 Depending of you printer maximum print height use the script to generate module of the perfect height. The blow module make the pipe confortable and efficient.
 
-To stabilise the dart during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have an option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the dart rotate during the flight.
+To stabilise the darts during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have an option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the darts rotate during the flight.
 
 ![image](img/groove.jpg)
 
@@ -98,7 +98,7 @@ fix_length          =   30;          // Length of th connectors
 fix_ease            =   .2;          // ease between pipe to connect them
 
 /** PIPE **/
-internal_radius     =   6.7;        // do not change fine for standart Nerf arrow // .5 inch ?
+internal_radius     =   6.7;        // do not change fine for standarts Nerf arrow // .5 inch ?
 external_radius     =   9.5;        // radius of the pipe 
 
 /** ENTRANCE  **/
