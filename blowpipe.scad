@@ -1,21 +1,29 @@
 
-/* ---------------------------------------------------------------------------- */
-/*                                                                              */
-/*                                                                              */
-/*      Parametric BlowPipe for Nerf dart by @targz (Julien Terraz)             */
-/*      It is licensed under the Creative Commons 1.0 Universal                 */
-/*                                                                              */
-/*                                                                              */
-/* ---------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------*/
+/*                                                                                       */
+/*                                                                                       */
+/*       _   _  _________________  ______ _     _____  _    _______ ___________ _____    */ 
+/*      | \ | ||  ___| ___ \  ___| | ___ \ |   |  _  || |  | | ___ \_   _| ___ \  ___|   */
+/*      |  \| || |__ | |_/ / |_    | |_/ / |   | | | || |  | | |_/ / | | | |_/ / |__     */
+/*      | . ` ||  __||    /|  _|   | ___ \ |   | | | || |/\| |  __/  | | |  __/|  __|    */
+/*      | |\  || |___| |\ \| |     | |_/ / |___\ \_/ /\  /\  / |    _| |_| |   | |___    */
+/*      \_| \_/\____/\_| \_\_|     \____/\_____/\___/  \/  \/\_|    \___/\_|   \____/    */
+/*                                                                                       */
+/*                                                                                       */
+/*           Parametric BlowPipe for Nerf dart by @targz (Julien Terraz)                 */
+/*           It is licensed under the Creative Commons 1.0 Universal                     */
+/*                                                                                       */
+/*                                                                                       */
+/* --------------------------------------------------------------------------------------*/
 
 
-/* ---------------------------------------------------------------------------- */
-/*                                 SETTINGS                                     */
-/* ---------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------- */
+/*                                      SETTINGS                                         */
+/* ------------------------------------------------------------------------------------- */
 
 
 $fn                 =   50;          // Mesh quality (number of fragments )
-fix_length          =   30;          // Length of th connectors
+fix_length          =   20;          // Length of th connectors
 fix_ease            =   .15;         // ease between pipe to connect them
 
 /** PIPE **/
@@ -27,15 +35,16 @@ entrance_radius     =   6.5;        // Manage the pressure on the arrow in the e
 entrance_length     =   20;         // entrance length sould also have an impact on speed.
 
 // GROOVE
-groove_twist        =   45;         // number of rotation per module default:90;
+groove_twist        =   35;         // number of rotation per module default:90;
 groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   4;         // Number of groove default:4;
+groove_number       =   1;         // Number of groove default:4;
 
 
 
-/* ---------------------------------------------------------------------------- */
-/*                                   PUBLIC                                     */
-/* ---------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------------------- */
+/*                                        PUBLIC                                         */
+/* ------------------------------------------------------------------------------------- */
 
 /**  BLOW MODULE
  *
@@ -74,23 +83,69 @@ module demo(asGroove){
     translate([200,0,0])    blowPipe(190,asGroove);
 }
 
-/* ---------------------------------------------------------------------------- */
-/*              ADVANCED SETTING FROM HERE DO NOT EDIT                          */
-/* ---------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------- */
+/*                        ADVANCED SETTING FROM HERE DO NOT EDIT                         */
+/* ------------------------------------------------------------------------------------- */
 
 
 groove_angle                =   360 / groove_number;
 fix_width                   =   2;
 fix_pipe_overlap            =   1;
-blow_radius                 =   external_radius+2;
+blow_tube_width             =   2;
+blow_radius                 =   external_radius+blow_tube_width;
 fix_length_blow             =   5;                      // length of the blow module connector
 fix_connector_length        =   .5;         // Length ratio // deprecated
 fix_connector_length_ratio  =   .2;    // Regarding the pipe length
+studW                       =   3;
+studH                       =   1;
+studL                       =   0;
+studP                       =   5;
 
 
-/* ---------------------------------------------------------------------------- */
-/*                                   PRIVATE                                    */
-/* ---------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------- */
+/*                                       PRIVATE                                         */
+/* ------------------------------------------------------------------------------------- */
+
+/** STUD
+ *
+ */
+
+/** STUD
+ *
+ */
+module negStud(w,l,h,p){
+    echo("stud",w);
+    translate([-w/2,-l/2,0]) union(){
+        cube(size = [w,l,h], center = false);
+        polyhedron(
+          points=[  [0,0,h],[w,0,h],[w/2,0,h+p], 
+                    [0,l,h],[w,l,h],[w/2,l,h+p] // side triangle
+                    ],       
+          faces=[ [2,1,0],[3,4,5],   // side triangle
+                  [3,2,0],[3,5,2],[1,2,5],[4,1,5],    // roof
+                  [0,1,4],[4,3,0]
+                  ]  
+         );
+    }
+} 
+module posStud(w,l,h,p){
+    echo("stud",w);
+    translate([-w/2,-l/2,0]) union(){
+        cube(size = [w,l,h], center = false);
+        polyhedron(
+          points=[  [0,-l,h],[w,-l,h],[w/2,0,h+p], 
+                    [0,l,h],[w,l,h],[w/2,0,h+p] // side triangle
+                    ],       
+          faces=[ [2,1,0],[3,4,5],   // side triangle
+                  [3,2,0],[3,5,2],[1,2,5],[4,1,5],    // roof
+                  [0,1,4],[4,3,0]
+                  ]  
+         );
+    }
+}
+
+
+
 
 
 /** GROOVES
@@ -117,7 +172,7 @@ module grooves(pl){
 module main_pipe(pl,asGroove){
         // MAIN PIPE
         length =   pl-fix_length; 
-        translate([0, 0, fix_length])  
+        translate([0, 0, fix_length]) { 
             difference(){
                 color("red") difference(){
                     cylinder(length,r=external_radius);
@@ -125,7 +180,12 @@ module main_pipe(pl,asGroove){
                 }
                 echo("asGroove",asGroove);
                 if(asGroove) grooves(pl);
-            }  
+            } 
+
+        } 
+        // STUD
+        rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) posStud(studW,studH,studL,studP); 
+
 }
 
 /** PIPES CONNECTOR
@@ -133,19 +193,26 @@ module main_pipe(pl,asGroove){
  * @param {number} PipeLength
  */
 module pipeConnector(pl){
-     translate([0, 0, fix_length]) {
-        radius1 = external_radius+fix_width+fix_ease;
-        // FIX PIPE
-        color("grey")  translate([0, 0, -fix_length]) difference(){
-            cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=radius1);
-            translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
+     difference(){
+         // CONNECTOR
+         translate([0, 0, fix_length]) {
+            radius1 = external_radius+fix_width+fix_ease;
+            // FIX PIPE
+            color("grey")  translate([0, 0, -fix_length]) difference(){
+                cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=radius1);
+                translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
+             }
+            // FIX CONNECTOR
+            color("orange")  translate([0, 0, 0]) difference(){
+                cylinder(pl*fix_connector_length_ratio,r1=radius1,r2=external_radius);
+                translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio+10),r=external_radius);
+             }   
+
+            
          }
-        // FIX CONNECTOR
-        color("orange")  translate([0, 0, 0]) difference(){
-            cylinder(pl*fix_connector_length_ratio,r1=radius1,r2=external_radius);
-            translate([0, 0, -5]) cylinder((pl*fix_connector_length_ratio+10),r=external_radius);
-         }     
-     }
+         // STUD
+         rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) posStud(studW,studH,studL,studP);  
+    }
 }
 
 /** BLOW MODULE
