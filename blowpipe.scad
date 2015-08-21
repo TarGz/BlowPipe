@@ -29,7 +29,7 @@ entrance_length     =   20;         // entrance length sould also have an impact
 // GROOVE
 groove_twist        =   45;         // number of rotation per module default:90;
 groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   16;         // Number of groove default:4;
+groove_number       =   4;         // Number of groove default:4;
 
 
 

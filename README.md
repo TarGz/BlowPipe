@@ -104,6 +104,12 @@ groove_number       =   16;         // Number of groove default:4;
 ## 3D PRINTING
 
 Those part should be printed as they came out of the script without any support.
-infill			: 10%
-layer heigth	: 0.3mm
+
+```
+infill				: 15% 
+layer heigth		: 0.3mm
+Top solid layer 	: 3
+Bottom solid layer 	: 3
+Outline perimeter 	: 2
+```
 
