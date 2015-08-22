@@ -16,7 +16,7 @@
 
 
 
-# 3D print Nerf darts Parametric BlowPipe 
+# Nerf darts Parametric BlowPipe 
 > Inspire by [Franck Youdine](https://twitter.com/fyoudine) Nerf darts paper blowpipe 
 
 ![image](img/usage.jpg)
@@ -32,18 +32,16 @@ We have used them a lot in the office and then Franck Youdine made a paper blowp
 
 The longer the pipe the more it will be accurate, it was a bit challenging to print a long pipe has pipe need to be printed vertically. That were I came with the idea of module that could be connected and printed separately.
 
+Depending of you printer maximum print height you can use the script to generate pipe of the perfect height. The blow module make the pipe confortable and efficient.
 
-
-Depending of you printer maximum print height use the script to generate module of the perfect height. The blow module make the pipe confortable and efficient.
-
-To stabilise the darts during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have an option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the darts rotate during the flight.
+To stabilise the darts during the flight I get this idea of [Rifling](https://en.wikipedia.org/wiki/Rifling) so you have an option to add some groove inside the pipe. Still not sure of the efficiency, I need to get a high frame rate camera to check if the darts are rotating during the flight.
 
 ![image](img/groove.jpg)
 
 
 ## REQUIREMENTS
 
-You will need [OpenScad](http://www.openscad.org/) free software to generate the blowpipes.
+You will need [OpenScad](http://www.openscad.org/) free software to generate the blowpipes stl.
 
 ## How to
 
@@ -62,7 +60,7 @@ Then use the code below or uncomment different part of the demo file to generate
 include <blowpipe.scad>;
 ```
 
-## demo
+## check the demo
 
 
 ```
@@ -72,7 +70,7 @@ include <blowpipe.scad>;
 demo(true); 
 ```
 
-##  the blow
+## generate the blow module
 
 ```
 /**
@@ -82,14 +80,14 @@ demo(true);
 blow(length,groove); 
 ```
 
-##  the pipes
+##  generate pipes
 
 ```
 /**
  * @param {number} PipeLength
  * @param {boolean} HasGroove
  */
-pipe(length);
+pipe(length,groove);
 ```
 
 ## ADVANCED PARAMETERS
