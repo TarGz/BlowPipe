@@ -1,19 +1,23 @@
 /* --------------------------------------------------------------------------------------*/
-/*                                                                                       */
-/*                                                                                       */
-/*       _   _  _________________  ______ _     _____  _    _______ ___________ _____    */ 
-/*      | \ | ||  ___| ___ \  ___| | ___ \ |   |  _  || |  | | ___ \_   _| ___ \  ___|   */
-/*      |  \| || |__ | |_/ / |_    | |_/ / |   | | | || |  | | |_/ / | | | |_/ / |__     */
-/*      | . ` ||  __||    /|  _|   | ___ \ |   | | | || |/\| |  __/  | | |  __/|  __|    */
-/*      | |\  || |___| |\ \| |     | |_/ / |___\ \_/ /\  /\  / |    _| |_| |   | |___    */
-/*      \_| \_/\____/\_| \_\_|     \____/\_____/\___/  \/  \/\_|    \___/\_|   \____/    */
-/*                                                                                       */
-/*                                                                                       */
-/*           Parametric BlowPipe for Nerf dart by @targz (Julien Terraz)                 */
-/*           It is licensed under the Creative Commons 1.0 Universal                     */
-/*                                                                                       */
+/*   ____   ____    _    ____    ____  _     ___  ______        ______ ___ ____  _____   */
+/*  / ___| / ___|  / \  |  _ \  | __ )| |   / _ \|  _ \ \      / /  _ \_ _|  _ \| ____|  */
+/*  \___ \| |     / _ \ | | | | |  _ \| |  | | | | |_) \ \ /\ / /| |_) | || |_) |  _|    */
+/*   ___) | |___ / ___ \| |_| | | |_) | |__| |_| |  __/ \ V  V / |  __/| ||  __/| |___   */
+/*  |____/ \____/_/   \_\____/  |____/|_____\___/|_|     \_/\_/  |_|  |___|_|   |_____|  */
 /*                                                                                       */
 /* --------------------------------------------------------------------------------------*/
+
+
+
+/* --------------------------------------------------------------------------------------*/
+/*                                                                                       */
+/*           Parametric BlowPipe for Nerf darts by @targz (Julien Terraz)                */
+/*           This work is licensed under the Creative Commons Attribution                */
+/*           NonCommercial 4.0 International License. To view a copy of this             */
+/*           license, visit http://creativecommons.org/licenses/by-nc/4.0/.              */
+/*                                                                                       */
+/* --------------------------------------------------------------------------------------*/
+
 
 
 /* ------------------------------------------------------------------------------------- */
@@ -26,7 +30,7 @@ fix_length          =   20;         // Length of the connectors default:20
 fix_ease            =   .15;        // ease between pipe to connect them default:0.15
 
 /** PIPE **/
-internal_radius     =   6.7;        // fine for standard Nerf arrow // .5 inch ? default:6.7
+internal_radius     =   6.7;        // fine for Nerf Elite Dart (.5 inch)  default radius:6.7mm
 external_radius     =   9.5;        // radius of the pipe  default:9.5
 
 /** ENTRANCE  **/
@@ -68,7 +72,7 @@ module blow(pl,asGroove){
 module pipe(pl,asGroove){
     color("white") 
     rotate([180,0,0]) translate([0,0,-pl]) union(){
-        pipeConnector(pl);
+        pipeConnector(pl,asGroove);
         main_pipe(pl,asGroove);
     }
 }
@@ -177,7 +181,7 @@ module main_pipe(pl,asGroove){
 
         } 
         // STUD
-        rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) stud(studW,studH,studL,studP); 
+        if(asGroove) rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) stud(studW,studH,studL,studP); 
 
 }
 
@@ -186,7 +190,7 @@ module main_pipe(pl,asGroove){
  * @param {number} PipeLength
  *
  */
-module pipeConnector(pl){
+module pipeConnector(pl,asGroove){
      difference(){
          // CONNECTOR
          translate([0, 0, fix_length]) {
@@ -205,7 +209,7 @@ module pipeConnector(pl){
             
          }
          // STUD
-         rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
+         if(asGroove) rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
     }
 }
 
