@@ -24,6 +24,7 @@
 
 You are using this at your own risks, darts are relatively safe but can still hurts eyes. I can not been made responsible of any stupid things you will do with this. 
 
+
 ## LICENSE
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc/4.0/)
@@ -32,8 +33,12 @@ SCAD BLOWPIPE by [@targz](https://twitter.com/TarGz) is licensed under a [Creati
 
 ## ABOUT
 
-Darts are fun, specially in office opens pace, but dart gun are not very powerful and not accurate at all.
+This project have been tested and developed to fire Nerf Elite Dart but may be adapted to fire darts in the futur.  
+
+Foam darts are fun, specially in office opens pace, but dart gun are not very powerful and not accurate at all.
 We have used them a lot in the office and then Franck Youdine made a paper blowpipe to send darts. It was so accurate and so powerful that I decided to build one using my 3D printer.
+
+![image](img/preview.jpg)
 
 The longer the pipe the more it will be accurate, it was a bit challenging to print a long pipe has pipe need to be printed vertically. That were I came with the idea of module that could be connected and printed separately.
 
@@ -46,14 +51,18 @@ To stabilise the darts during the flight I get this idea of [Rifling](https://en
 
 ## REQUIREMENTS
 
-You will need [OpenScad](http://www.openscad.org/) free software to generate the blowpipes stl.
+You will need:
+
+- [OpenScad](http://www.openscad.org/) free software to generate the blowpipes stl.
+- A 3D printer and some PLA
+- Some Nerf Elite Dart
 
 ## How to
 
 After installing [OpenScad](http://www.openscad.org/) just use it to open the ```demo.scad``` file.
 The screen should preview the pipe below. 
 
-![image](img/preview.jpg)
+
 
 
 Then use the code below or uncomment different part of the demo file to generate your pipes.
@@ -127,6 +136,7 @@ groove_number       =   16;         // Number of groove default:16;
 Those part should be printed as they came out of the script without any support.
 
 ```
+material 			: PLA
 infill				: 10% 
 layer heigth		: 0.3mm
 Top solid layer 	: 3
