@@ -20,23 +20,23 @@
 /*                                      SETTINGS                                         */
 /* ------------------------------------------------------------------------------------- */
 
-
-$fn                 =   50;          // Mesh quality (number of fragments )
-fix_length          =   20;          // Length of th connectors
-fix_ease            =   .15;         // ease between pipe to connect them
+/** LENGTH **/
+$fn                 =   50;         // Mesh quality (number of fragments ) default:50
+fix_length          =   20;         // Length of the connectors default:20
+fix_ease            =   .15;        // ease between pipe to connect them default:0.15
 
 /** PIPE **/
-internal_radius     =   6.7;        // do not change fine for standart Nerf arrow // .5 inch ?
-external_radius     =   9.5;        // radius of the pipe 
+internal_radius     =   6.7;        // fine for standard Nerf arrow // .5 inch ? default:6.7
+external_radius     =   9.5;        // radius of the pipe  default:9.5
 
 /** ENTRANCE  **/
-entrance_radius     =   6.5;        // Manage the pressure on the arrow in the entrance, more pressure = more speed = harder to blow.
-entrance_length     =   20;         // entrance length sould also have an impact on speed.
+entrance_radius     =   6.5;        // Manage the pressure on the arrow in the entrance, more pressure = more speed = harder to blow. default:6.5
+entrance_length     =   20;         // entrance length should also have an impact on speed. defaulot:20
 
-// GROOVE
-groove_twist        =   35;         // number of rotation per module default:90;
-groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:2
-groove_number       =   32;         // Number of groove default:4;
+/** GROOVE  **/
+groove_twist        =   45;         // number of rotation per module default:45;
+groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:1
+groove_number       =   16;         // Number of groove default:16;
 
 
 
@@ -49,10 +49,12 @@ groove_number       =   32;         // Number of groove default:4;
  *
  * @param {number} PipeLength
  * @param {boolean} HasGroove
+ *
  */
-module blowModule(pl,asGroove){
-    color("red") rotate([180,0,0]) translate([0,0,-pl]) union(){
-        blow(pl);
+module blow(pl,asGroove){
+    color("red") 
+    rotate([180,0,0]) translate([0,0,-pl]) union(){
+        blowMod(pl);
         main_pipe(pl,asGroove);
     }
 }
@@ -61,9 +63,11 @@ module blowModule(pl,asGroove){
  * 
  * @param {number} PipeLength
  * @param {boolean} HasGroove
+ *
  */
-module blowPipe(pl,asGroove){
-     color("white") rotate([180,0,0]) translate([0,0,-pl]) union(){
+module pipe(pl,asGroove){
+    color("white") 
+    rotate([180,0,0]) translate([0,0,-pl]) union(){
         pipeConnector(pl);
         main_pipe(pl,asGroove);
     }
@@ -73,20 +77,21 @@ module blowPipe(pl,asGroove){
 /** DEMO
  * 
  * @param {boolean} hasGroove
+ *
  */
 module demo(asGroove){
-    translate([0,0,0])      blowModule(60,asGroove);
-    translate([50,0,0])     blowPipe(90,asGroove);
-    translate([100,0,0])    blowPipe(130,asGroove);
-    translate([150,0,0])    blowPipe(160,asGroove);
-    translate([200,0,0])    blowPipe(190,asGroove);
+    translate([0,0,0])      blow(60,asGroove);
+    translate([50,0,0])     pipe(90,asGroove);
+    translate([100,0,0])    pipe(130,asGroove);
+    translate([150,0,0])    pipe(160,asGroove);
+    translate([200,0,0])    pipe(190,asGroove);
 }
 
 /* ------------------------------------------------------------------------------------- */
 /*                        ADVANCED SETTING FROM HERE DO NOT EDIT                         */
 /* ------------------------------------------------------------------------------------- */
 
-
+debug                       =   false;
 groove_angle                =   360 / groove_number;
 fix_width                   =   2;
 fix_pipe_overlap            =   1;
@@ -96,7 +101,7 @@ fix_length_blow             =   5;                      // length of the blow mo
 fix_connector_length        =   .5;         // Length ratio // deprecated
 fix_connector_length_ratio  =   .2;    // Regarding the pipe length
 studW                       =   3;
-studH                       =   1;
+studH                       =   2;
 studL                       =   0;
 studP                       =   5;
 
@@ -106,34 +111,21 @@ studP                       =   5;
 /* ------------------------------------------------------------------------------------- */
 
 /** STUD
- *
- */
+    *  
+    *  @param {number} width
+    *  @param {number} height
+    *  @param {number} heigth
+    *  @param {number} depth
+    *  
+    */
 
-/** STUD
- *
- */
-module negStud(w,l,h,p){
+module stud(w,l,h,d){
     echo("stud",w);
     translate([-w/2,-l/2,0]) union(){
         cube(size = [w,l,h], center = false);
         polyhedron(
-          points=[  [0,0,h],[w,0,h],[w/2,0,h+p], 
-                    [0,l,h],[w,l,h],[w/2,l,h+p] // side triangle
-                    ],       
-          faces=[ [2,1,0],[3,4,5],   // side triangle
-                  [3,2,0],[3,5,2],[1,2,5],[4,1,5],    // roof
-                  [0,1,4],[4,3,0]
-                  ]  
-         );
-    }
-} 
-module posStud(w,l,h,p){
-    echo("stud",w);
-    translate([-w/2,-l/2,0]) union(){
-        cube(size = [w,l,h], center = false);
-        polyhedron(
-          points=[  [0,-l,h],[w,-l,h],[w/2,0,h+p], 
-                    [0,l,h],[w,l,h],[w/2,0,h+p] // side triangle
+          points=[  [0,-l,h],[w,-l,h],[w/2,0,h+d], 
+                    [0,l,h],[w,l,h],[w/2,0,h+d] // side triangle
                     ],       
           faces=[ [2,1,0],[3,4,5],   // side triangle
                   [3,2,0],[3,5,2],[1,2,5],[4,1,5],    // roof
@@ -150,6 +142,7 @@ module posStud(w,l,h,p){
 /** GROOVES
  *
  * @param {number} PipeLength
+ *
  */
 module groove(pl){
     length =   pl-fix_length; 
@@ -167,6 +160,7 @@ module grooves(pl){
  *
  * @param {number} PipeLength
  * @param {boolean} HasGroove
+ *
  */
 module main_pipe(pl,asGroove){
         // MAIN PIPE
@@ -183,13 +177,14 @@ module main_pipe(pl,asGroove){
 
         } 
         // STUD
-        rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) posStud(studW,studH,studL,studP); 
+        rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) stud(studW,studH,studL,studP); 
 
 }
 
 /** PIPES CONNECTOR
  *
  * @param {number} PipeLength
+ *
  */
 module pipeConnector(pl){
      difference(){
@@ -210,52 +205,44 @@ module pipeConnector(pl){
             
          }
          // STUD
-         rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) posStud(studW,studH,studL,studP);  
+         rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
     }
 }
 
 /** BLOW MODULE
  * 
  * @param {number} PipeLength
+ *
  */
-module blow(pl){
-    difference(){
-
-         translate([0, 0, fix_length]) {
-            union(){
-                color("DeepSkyBlue") translate([0, 0, -fix_length-fix_length/3]) difference(){
-                    cylinder(fix_length/2,r1=lipsRadius,r2=external_radius);
-                    translate([0, 0, -5]) cylinder((fix_length/2)+10,r=blow_radius);
-                 }
-                 // PRESURE MANAGER
-                 union(){
-                     // cone down
-                     color("DeepSkyBlue") translate([0, 0, 0]) difference(){
-                        cylinder(entrance_length,r1=blow_radius,r2=external_radius);
-                        translate([0, 0, -.1]) cylinder(entrance_length+.2,r1=entrance_radius,r2=external_radius);
-                     }         
-                     // ring
-                     color("MidnightBlue") translate([0, 0, -entrance_length]) difference(){
-                        cylinder(entrance_length,r=blow_radius);
-                        translate([0, 0, -1]) cylinder(entrance_length+2,r=entrance_radius);
-                     }   
-                     // cone up
-                     color("CadetBlue") translate([0, 0, -fix_length_blow-entrance_length]) difference(){
-                        cylinder(fix_length_blow,r1=blow_radius,r2=blow_radius);
-                        translate([0, 0, -.1]) cylinder(fix_length_blow+.2,r1=external_radius,r2=entrance_radius);
-                     }   
+module blowMod(pl){
+    union(){
+        translate([0, 0, fix_length]) {
+                 // external hull
+                 color("DeepSkyBlue") translate([0, 0, 0]) difference(){
+                    cylinder(entrance_length,r1=blow_radius,r2=external_radius);
+                    translate([0, 0, -.1]) cylinder(entrance_length+.2,r1=entrance_radius,r2=external_radius);
+                 }         
+                 // pressure ring
+                 color("MidnightBlue") translate([0, 0, -entrance_length]) difference(){
+                    cylinder(entrance_length,r=blow_radius);
+                    translate([0, 0, -1]) cylinder(entrance_length+2,r=entrance_radius);
+                 }   
+                 // internal hull
+                 color("CadetBlue") translate([0, 0, -fix_length_blow-entrance_length]) difference(){
+                    cylinder(fix_length_blow,r1=blow_radius,r2=blow_radius);
+                    translate([0, 0, -.1]) cylinder(fix_length_blow+.2,r1=external_radius,r2=entrance_radius);
+                 }   
+            
+            // LIPS CONTACT SURFACE
+            translate([0, 0, 8-fix_length_blow-entrance_length]){
+                color("white") difference(){
+                    rotate([180,0,0])  import("stl/lips.stl", convexity = 5);
+                    translate([0, 0, -pl/2]) cylinder((pl)+10,r=external_radius);
                 }
-                // LIPS CONTACT SURFACE
-                translate([0, 0, 8-fix_length_blow-entrance_length]){
-                    color("white") difference(){
-                        rotate([180,0,0])  import("stl/lips.stl", convexity = 5);
-                        translate([0, 0, -pl/2]) cylinder((pl)+10,r=external_radius);
-                    }
-                } 
-            }  
+            } 
         }
+    }
 
-    }  
 }
 
 

@@ -25,14 +25,15 @@ include <blowpipe.scad>;
  * 
  * @param {boolean} hasGroove
  */
-//demo(true);
+ $fn=50;
+// demo(true);
 
 /**  BLOW MODULE
  *
  * @param {number} PipeLength
  * @param {boolean} HasGroove
  */
-//blowModule(70,true);
+// blow(60,true);
 
 
 /** Create blow pipes 
@@ -40,7 +41,7 @@ include <blowpipe.scad>;
  * @param {number} PipeLength
  * @param {boolean} HasGroove
  */
- blowPipe(60,true);
+ pipe(130,true);
 
 
 
