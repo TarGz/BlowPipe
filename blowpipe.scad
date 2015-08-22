@@ -30,7 +30,7 @@ fix_length          =   20;         // Length of the connectors default:20
 fix_ease            =   .15;        // ease between pipe to connect them default:0.15
 
 /** PIPE **/
-internal_radius     =   6.7;        // fine for standard Nerf arrow // .5 inch ? default:6.7
+internal_radius     =   6.7;        // fine for Nerf Elite Dart (.5 inch)  default radius:6.7mm
 external_radius     =   9.5;        // radius of the pipe  default:9.5
 
 /** ENTRANCE  **/
@@ -72,7 +72,7 @@ module blow(pl,asGroove){
 module pipe(pl,asGroove){
     color("white") 
     rotate([180,0,0]) translate([0,0,-pl]) union(){
-        pipeConnector(pl);
+        pipeConnector(pl,asGroove);
         main_pipe(pl,asGroove);
     }
 }
@@ -181,7 +181,7 @@ module main_pipe(pl,asGroove){
 
         } 
         // STUD
-        rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) stud(studW,studH,studL,studP); 
+        if(asGroove) rotate([0,0,-90-groove_twist]) translate([0, blow_radius-blow_tube_width+studH/2, length-fix_ease]) stud(studW,studH,studL,studP); 
 
 }
 
@@ -190,7 +190,7 @@ module main_pipe(pl,asGroove){
  * @param {number} PipeLength
  *
  */
-module pipeConnector(pl){
+module pipeConnector(pl,asGroove){
      difference(){
          // CONNECTOR
          translate([0, 0, fix_length]) {
@@ -209,7 +209,7 @@ module pipeConnector(pl){
             
          }
          // STUD
-         rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
+         if(asGroove) rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
     }
 }
 
