@@ -30,7 +30,7 @@
 /** LENGTH **/
 $fn                 =   50;         // Mesh quality (number of fragments ) default:50
 fix_length          =   20;         // Length of the connectors default:20
-fix_ease            =   .15;        // ease between pipe to connect them default:0.15
+fix_ease            =   .13;        // ease between pipe to connect them default:0.15
 
 /** PIPE **/
 internal_radius     =   6.7;        // fine for Nerf Elite Dart (.5 inch)  default radius:6.7mm
@@ -73,7 +73,7 @@ module blow(pl,asGroove){
  *
  */
 module pipe(pl,asGroove){
-    color("white") 
+    // color("white") 
     rotate([180,0,0]) translate([0,0,-pl]) union(){
         pipeConnector(pl,asGroove);
         main_pipe(pl,asGroove);
@@ -100,7 +100,7 @@ module demo(asGroove){
 
 debug                       =   false;
 groove_angle                =   360 / groove_number;
-fix_width                   =   2;
+fix_width                   =   4;
 fix_pipe_overlap            =   1;
 blow_tube_width             =   2;
 blow_radius                 =   external_radius+blow_tube_width;
