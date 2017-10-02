@@ -104,10 +104,10 @@ blow_radius                 =   external_radius+blow_tube_width;
 fix_length_blow             =   5;                      // length of the blow module connector
 fix_connector_length        =   .5;         // Length ratio // deprecated
 fix_connector_length_ratio  =   .2;    // Regarding the pipe length
-studW                       =   3;
-studH                       =   2;
+studW                       =   8;
+studH                       =   1;
 studL                       =   0;
-studP                       =   5;
+studP                       =   20;
 
 
 /* ------------------------------------------------------------------------------------- */
@@ -197,7 +197,7 @@ module pipeConnector(pl,asGroove){
             radius1 = external_radius+fix_width+fix_ease;
             // FIX PIPE
             color("grey")  translate([0, 0, -fix_length]) difference(){
-                cylinder(fix_length,r1=external_radius+fix_width+fix_ease-1,r2=radius1);
+                cylinder(fix_length,r1=external_radius+fix_width+fix_ease,r2=radius1);
                 translate([0, 0, -5]) cylinder((fix_length)+10,r=external_radius+fix_ease);
              }
             // FIX CONNECTOR
@@ -209,7 +209,7 @@ module pipeConnector(pl,asGroove){
             
          }
          // STUD
-         if(asGroove) rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL]) stud(studW,studH,studL,studP);  
+         if(asGroove) rotate([0,0,-90]) translate([0, blow_radius-blow_tube_width+studH/2, -studL-.1]) stud(studW,studH,studL,studP);  
     }
 }
 
