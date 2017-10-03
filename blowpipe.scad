@@ -27,7 +27,7 @@
 /** LENGTH **/
 $fn                 =   50;         // Mesh quality (number of fragments ) default:50
 fix_length          =   20;         // Length of the connectors default:20
-fix_ease            =   .15;        // ease between pipe to connect them default:0.15
+fix_ease            =   .00;        // ease between pipe to connect them default:0.05
 
 /** PIPE **/
 internal_radius     =   6.7;        // fine for Nerf Elite Dart (.5 inch)  default radius:6.7mm
@@ -38,7 +38,7 @@ entrance_radius     =   6.5;        // Manage the pressure on the arrow in the e
 entrance_length     =   20;         // entrance length should also have an impact on speed. defaulot:20
 
 /** GROOVE  **/
-groove_twist        =   45;         // number of rotation per module default:45;
+groove_twist        =   25;         // number of rotation per module default:45;
 groove_size         =   1;          // Size of the groove (must not be bigger than External radius - Internal radius default:1
 groove_number       =   16;         // Number of groove default:16;
 
@@ -85,8 +85,8 @@ module pipe(pl,asGroove){
  */
 module demo(asGroove){
     translate([0,0,0])      blow(60,asGroove);
-    translate([50,0,0])     pipe(90,asGroove);
-    translate([100,0,0])    pipe(130,asGroove);
+    translate([50,0,0])     pipe(50,asGroove);
+    translate([100,0,0])    pipe(100,asGroove);
     translate([150,0,0])    pipe(160,asGroove);
     translate([200,0,0])    pipe(190,asGroove);
 }
@@ -149,8 +149,9 @@ module stud(w,l,h,d){
  *
  */
 module groove(pl){
-    length =   pl-fix_length; 
-    linear_extrude(height = length, center = false, convexity = 1, twist = groove_twist)
+    length =   pl-fix_length;
+    groove_ratio = 100 / groove_twist;
+    linear_extrude(height = length, center = false, convexity = 1, twist = groove_ratio*length)
         translate([internal_radius+groove_size/2, 0, 0])
         rotate([0,0,-135]) polygon(points=[[0,0],[groove_size,0],[0,-groove_size]], paths=[[0,1,2]]);
 }
